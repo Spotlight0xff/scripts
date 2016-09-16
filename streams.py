@@ -1,8 +1,10 @@
 #!/usr/bin/python2
 
-import urllib as ul
+import ConfigParser
+import urllib2 as ul
 import json
 import argparse
+import sys
 from unicodedata import normalize
 
 
@@ -13,6 +15,7 @@ parser.add_argument('--delimiter', '-d', help='Prints the output separated by th
 parser.add_argument('--limit', '-l', help='Limits the output to $n streams', metavar='INT', default='0')
 parser.add_argument('--minimal', '-m', help='Minimal viewer count', metavar='INT', default='50')
 parser.add_argument('--title', '-t', help='Print the title of the streams aswell', action='store_true')
+parser.add_argument('--config', '-f', help='Configuration file including twitch API client id', action='store')
 args = parser.parse_args()
 
 
@@ -36,12 +39,26 @@ def colorConky(name,viewer):
 
     return str
 
+if not args.config:
+    print "[!!] You need to specify a config file!"
+    sys.exit(0)
+
+
+config = ConfigParser.RawConfigParser()
+config.read(args.config)
+client_id = config.get('Twitch', 'client_id')
+if not client_id:
+    print "[!!] Specify an client_id in the Twitch section of the config"
+    sys.exit(0)
+
 
 if args.verbose:
     print "[**] Open URL"
-response = ul.urlopen('https://api.twitch.tv/kraken/streams?game=Counter-Strike%3A%20Global%20Offensive')
+req = ul.Request('https://api.twitch.tv/kraken/streams?game=Counter-Strike%3A%20Global%20Offensive')
+req.add_header('Client-ID', client_id)
+response = ul.urlopen(req)
 if args.verbose:
-    print "[**] Read HTMl"
+    print "[**] Read HTML"
 html = response.read().decode('utf-8')
 html = normalize('NFKD', html).encode('ascii', 'ignore')
 

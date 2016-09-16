@@ -1,8 +1,9 @@
 #!/bin/bash
 
+CONFIG_FILE="/home/$USER/.config/scripts/streams.ini"
 MY_PATH="`dirname \"$0\"`"
 
-(streams=$(python2 $MY_PATH/streams.py -d '`')
+(streams=$(python2 $MY_PATH/streams.py -f "$CONFIG_FILE" -d '`')
 echo "$streams" > /tmp/.streams
 ) | zenity --progress --pulsate --auto-close --text="Fetch CS:GO Streams"
 
