@@ -30,7 +30,7 @@ do
             qualities[$i]=$(echo $output| cut -d':' -f2| cut -d',' -f $i|cut -d' ' -f2)
         done
 
-        in=$(zenity --list --height=300 --title="Choose Quality" --column="Quality" ${qualities[*]})
+        in=$(printf "%s\n" "${qualities[@]}" | rofi -dmenu p "quality")
         if [ ! $in ]; then exit; fi
     fi
 
