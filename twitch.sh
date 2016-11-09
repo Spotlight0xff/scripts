@@ -30,7 +30,7 @@ do
             qualities[$i]=$(echo $output| cut -d':' -f2| cut -d',' -f $i|cut -d' ' -f2)
         done
 
-        in=$(printf "%s\n" "${qualities[@]}" | rofi -dmenu p "quality")
+        in=$(printf "%s\n" "${qualities[@]}" | rofi -dmenu -p "Quality: ")
         if [ ! $in ]; then exit; fi
     fi
 
