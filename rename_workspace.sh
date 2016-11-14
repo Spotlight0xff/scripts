@@ -1,3 +1,9 @@
 #!/usr/bin/bash
 focused_ws=$(i3-msg -t get_workspaces | jq '.[]|select(.focused == true).num')
-i3-input -F "rename workspace to \"${focused_ws}: %s\"" -P 'New name: '
+name=$(~/scripts/dpass.sh "Workspace: ")
+if [ -z $name ];then
+  i3-msg "rename workspace to \"${focused_ws}\""
+  exit
+fi
+i3-msg "rename workspace to \"${focused_ws}: ${name}\""
+
