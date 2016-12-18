@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-WALLPATH=/home/spotlight/ownCloud/Photos/Wallpaper/
+WALLPATH=~/ownCloud/Photos/Wallpaper/
 
 
 while true; do
