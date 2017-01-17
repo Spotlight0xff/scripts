@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-width=$(xrandr | grep '*' | cut -d'x' -f1| tr -d '[[:space:]]')
+width=$(xrandr | grep '*' | cut -d'x' -f1| head -1 |tr -d '[[:space:]]')
 
 if [[ $width == 1366 ]]; then
     dir="laptop"
