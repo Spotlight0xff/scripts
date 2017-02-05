@@ -14,7 +14,7 @@ same_qual=false
 while true
 do
     if [ $same_qual == false ]; then
-      in=$($MY_PATH/livestreamer_parse_qual.sh | rofi -dmenu -p "Quality: ")
+      in=$($MY_PATH/livestreamer_parse_qual.sh $username| rofi -dmenu -p "Quality: ")
       if [ ! $in ]; then exit; fi
     fi
 

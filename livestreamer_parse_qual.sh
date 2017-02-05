@@ -1,6 +1,6 @@
 #!/bin/bash
 
-username="eleaguetv"
+username=$1
 
 
 output=$(livestreamer twitch.tv/$username)
