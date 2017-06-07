@@ -7,4 +7,4 @@ else
   file="$CURDIR/wallpaper-1107219.png"
 fi
 
-i3lock -i $file
+i3lock -t -i $file
