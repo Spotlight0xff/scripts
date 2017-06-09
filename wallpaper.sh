@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-WALLPATH=~/nextcloud/Photos/Wallpaper/
+WALLPATH=~/cloud/Photos/Wallpaper/
 
 
 while true; do
