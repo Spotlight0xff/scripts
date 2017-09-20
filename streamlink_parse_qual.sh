@@ -3,7 +3,7 @@
 username=$1
 
 
-output=$(livestreamer twitch.tv/$username)
+output=$(streamlink twitch.tv/$username)
 
 if [[ "$output" == *"source (best, worst)"* ]]; then
   qualities[0]="source"
