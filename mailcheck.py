@@ -20,7 +20,6 @@ parser = HeaderParser()
 
 def check_notified(hash):
     directory = os.path.split(notified_file)[0]
-    print(directory)
     if not os.path.exists(directory):
         os.makedirs(directory)
     if not os.path.exists(notified_file):
@@ -99,19 +98,30 @@ if __name__ == '__main__':
 
     config = configparser.ConfigParser()
     config.read(CONFIGFILE)
+    output_type = config.get('General', 'output', fallback='conky')
 
-    conky = ''
+    output = ''
     for section in config.sections():
+        if section in ['General']:
+            continue
         server = config.get(section, 'server', fallback='')
         login = config.get(section, 'login', fallback='')
         password = config.get(section, 'password', fallback='')
-        conky_pos = config.get(section, 'conky_pos' + str(width), fallback='')
-        if not server or not login or not password or not conky_pos:
-            continue
         new_mails = 0
         try:
             new_mails = getnewmails(server, login, password)
-        except:
+        except Exception as e:
             new_mails = -1
-        conky += '${goto '+conky_pos+'}' + str(new_mails)
-    print(conky)
+
+
+        if output_type == 'conky':
+            conky_pos = config.get(section, 'conky_pos' + str(width), fallback='')
+            if not server or not login or not password or not conky_pos:
+                continue
+            output += '${goto '+conky_pos+'}' + str(new_mails)
+        elif output_type == 'polybar':
+            prefix = config.get(section, 'prefix', fallback=section)
+            output += '%s %d    ' % (prefix, new_mails)
+        else:
+            assert False, 'Output "%s" not supported!' % output_type
+    print(output)
