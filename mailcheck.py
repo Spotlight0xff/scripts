@@ -15,7 +15,7 @@ import subprocess
 
 
 CONFIGFILE = os.path.expanduser('~') + '/.config/scripts/mailcheck.ini'
-notified_file = '/home/spotlight/.mailcheck/notified'
+notified_file = '/home/spotlight/.config/mailcheck/notified'
 parser = HeaderParser()
 
 def check_notified(hash):
