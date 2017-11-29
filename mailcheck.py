@@ -19,7 +19,15 @@ notified_file = '/home/spotlight/.config/mailcheck/notified'
 parser = HeaderParser()
 
 def check_notified(hash):
-    with open(notified_file, 'r') as f:
+    directory = os.path.split(notified_file)[0]
+    print(directory)
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    if not os.path.exists(notified_file):
+        with open(notified_file, 'x'):
+            pass
+
+    with open(notified_file, 'r+') as f:
         lines = f.readlines()
         for line in lines:
             line = line.strip()
