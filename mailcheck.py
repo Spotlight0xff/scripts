@@ -90,8 +90,12 @@ def getnewmails(host, user, pw):
 
 
 if __name__ == '__main__':
-    output = subprocess.Popen('xrandr | grep "\*" | cut -d" " -f4 | cut -d "x" -f1',shell=True, stdout=subprocess.PIPE).communicate()[0]
-    width = int(output)
+    width = 1920
+    try:
+        output = subprocess.Popen('xrandr | grep "\*" | cut -d" " -f4 | cut -d "x" -f1',shell=True, stdout=subprocess.PIPE).communicate()[0]
+        width = int(output)
+    except:
+        pass
 
     config = configparser.ConfigParser()
     config.read(CONFIGFILE)
